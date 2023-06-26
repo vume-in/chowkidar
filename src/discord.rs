@@ -5,14 +5,6 @@ pub async fn send_alarm_webhook(payload: &Value) -> Result<(), Error> {
     let webhook_url = std::env::var("WEBHOOK_URL")
         .expect("A WEBHOOK_URL must be set in this app's Lambda environment variables.");
 
-    let time_now = chrono::Utc::now().to_rfc3339_opts(chrono::SecondsFormat::Secs, false);
-
-    let check_name = payload.get("Trigger").unwrap().get("Dimensions").unwrap()[0]
-        .get("value")
-        .unwrap()
-        .as_str()
-        .unwrap();
-
     // Construct Discord webhook payload
     let discord_payload = json!({
         "content": format!("ALARM: {}", payload.get("AlarmName").unwrap_or(&Value::Null)),
@@ -22,17 +14,9 @@ pub async fn send_alarm_webhook(payload: &Value) -> Result<(), Error> {
             "color": 16_725_558,
             "fields": [
               {
-                "name": "Check Name",
-                "value": check_name,
-              },
-              {
                 "name": "Trigger Time",
                 "value": payload.get("StateChangeTime").unwrap_or(&Value::Null),
               },
-              {
-                "name": "Time Now",
-                "value": time_now,
-              }
             ]
           }
         ]
@@ -54,14 +38,6 @@ pub async fn send_ok_webhook(payload: &Value) -> Result<(), Error> {
     let webhook_url = std::env::var("WEBHOOK_URL")
         .expect("A WEBHOOK_URL must be set in this app's Lambda environment variables.");
 
-    let time_now = chrono::Utc::now().to_rfc3339_opts(chrono::SecondsFormat::Secs, false);
-
-    let check_name = payload.get("Trigger").unwrap().get("Dimensions").unwrap()[0]
-        .get("value")
-        .unwrap()
-        .as_str()
-        .unwrap();
-
     // Construct Discord webhook payload
     let discord_payload = json!({
         "content": format!("OK: {}", payload.get("AlarmName").unwrap_or(&Value::Null)),
@@ -71,17 +47,9 @@ pub async fn send_ok_webhook(payload: &Value) -> Result<(), Error> {
             "color": 2_031_360,
             "fields": [
               {
-                "name": "Check Name",
-                "value": check_name,
-              },
-              {
                 "name": "Trigger Time",
                 "value": payload.get("StateChangeTime").unwrap_or(&Value::Null),
               },
-              {
-                "name": "Time Now",
-                "value": time_now,
-              }
             ]
           }
         ]
