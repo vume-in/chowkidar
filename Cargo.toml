@@ -7,15 +7,15 @@ authors = ["Ayaan Zaidi <zaidi@vume.in>"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-anyhow = "1.0.71"
-lambda_runtime = "0.8.1"
-reqwest = { version = "0.11.18", default-features = false, features = [
+anyhow = "1.0.75"
+lambda_runtime = "0.8.2"
+reqwest = { version = "0.11.22", default-features = false, features = [
   "json",
   "rustls-tls",
 ] }
-serde = "1.0.164"
-serde_json = "1.0.97"
-tokio = { version = "1.28.2", features = ["full"] }
+serde = "1.0.188"
+serde_json = "1.0.107"
+tokio = { version = "1.33.0", features = ["full"] }
 tracing = { version = "0.1.37", features = ["log"] }
 tracing-subscriber = { version = "0.3.17", default-features = false, features = [
   "fmt",
